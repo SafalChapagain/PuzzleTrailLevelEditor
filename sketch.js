@@ -240,6 +240,38 @@ function objectExists(id)
   return false;
 }
 
+function idToName(id)
+{
+  let name = "";
+  switch (id.substring(0, 1))
+  {
+    case "p":
+      name += "Player";
+      break;
+    case "c":
+      name += "Capture";
+      break;
+    case "w":
+      name += "Wall";
+      break;
+  }
+  if (id !== "w")
+  {
+    name += ` (${id.substring(1, 2)})`;
+    
+    if (id.substring(0, 1) === "p")
+    {
+      if (parseInt(id.substring(1, 2)) > 4)
+      {
+        name += " (Ghost)";
+      }
+    }
+
+  }
+  
+  return name;
+}
+
 let sizeX = 12;
 let sizeY = 12;
 
@@ -290,10 +322,12 @@ function getGridPos(x, y)
 
 let editScale = 1;
 
+
+
 function draw() {
   sizeX = sizeXSlider.value();
   sizeY = sizeYSlider.value();
-  sizeText.html(`(${sizeX}, ${sizeY})`);
+  sizeText.html(`Size: (${sizeX}, ${sizeY})`);
 
   currentIndex = indexSlider.value();
 
@@ -314,7 +348,7 @@ function draw() {
   background(192);
 
 
-  infoText.html(`${getCurrentId()}`);
+  infoText.html(`${idToName(getCurrentId())}`);
   tint(255, 255);
   for (let i of gameObjects)
   {
