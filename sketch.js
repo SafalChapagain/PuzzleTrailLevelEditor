@@ -126,15 +126,6 @@ function changeObject()
   }
 }
 
-function changeIndex()
-{
-  currentIndex++;
-  if (currentIndex > 8)
-  {
-    currentIndex = 1;
-  }
-}
-
 function clearMap()
 {
   gameObjects = [];
@@ -252,7 +243,7 @@ function objectExists(id)
 let sizeX = 12;
 let sizeY = 12;
 
-var canvas, infoText, objectButton, indexButton, sizeXSlider, sizeYSlider, clearButton, exportButton, exportA, sizeText, importInput, importButton;
+var canvas, infoText, objectButton, indexSlider, sizeXSlider, sizeYSlider, clearButton, exportButton, exportA, sizeText, importInput, importButton;
 
 function setup() {
   sizeText = createP();
@@ -270,7 +261,7 @@ function setup() {
 
   infoText = createP();
   objectButton = createButton("Change Object");
-  indexButton = createButton("Change Index");
+  indexSlider = createSlider(1, 8, 1, 1);
   clearButton = createButton("Clear");
   exportButton = createButton("Export");
   importInput = createFileInput(selectMap);
@@ -278,14 +269,13 @@ function setup() {
 
   infoText.position(0, 40);
   objectButton.position(0, 80);
-  indexButton.position(0, 100);
+  indexSlider.position(0, 100);
   clearButton.position(0, 260);
   exportButton.position(0, 140);
   importInput.position(0, 170);
   importButton.position(0, 190);
 
   objectButton.mousePressed(changeObject);
-  indexButton.mousePressed(changeIndex);
   clearButton.mousePressed(clearMap);
   exportButton.mousePressed(exportMap);
   importButton.mousePressed(importMap);
@@ -304,6 +294,8 @@ function draw() {
   sizeX = sizeXSlider.value();
   sizeY = sizeYSlider.value();
   sizeText.html(`(${sizeX}, ${sizeY})`);
+
+  currentIndex = indexSlider.value();
 
   if (sizeX > 16 || sizeY > 16)
   {
